@@ -25,7 +25,8 @@ public interface MyArray<E> {
 
     void clear();
 
-    void quickSort();
 
     E set(int index, E e);
+
+    void sort();
 }

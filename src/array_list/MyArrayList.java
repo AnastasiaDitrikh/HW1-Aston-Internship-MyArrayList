@@ -1,6 +1,8 @@
 package array_list;
 
 
+import java.util.Arrays;
+
 public class MyArrayList<E> implements MyArray<E> {
     private E[] values;
 
@@ -54,9 +56,10 @@ public class MyArrayList<E> implements MyArray<E> {
         }
         return -1;
     }
+
     @Override
     public int lastIndexOf(E e) {
-        for (int i = values.length-1; i >=0; i--) {
+        for (int i = values.length - 1; i >= 0; i--) {
             if (e == values[i]) {
                 return i;
             }
@@ -76,23 +79,24 @@ public class MyArrayList<E> implements MyArray<E> {
             ex.printStackTrace();
         }
     }
+
     @Override
     public void deleteRange(int indexStart, int indexEnd) {
         try {
             E[] temp = values;
-            values = (E[]) new Object[temp.length - (indexEnd-indexStart)];
+            values = (E[]) new Object[temp.length - (indexEnd - indexStart)];
             System.arraycopy(temp, 0, values, 0, indexStart);
-            System.arraycopy(temp, indexEnd, values, indexEnd-1, temp.length - (indexEnd-indexStart)-1);
-            System.out.println("");
+            System.arraycopy(temp, indexEnd, values, indexEnd - 1, temp.length - (indexEnd - indexStart) - 1);
         } catch (ClassCastException ex) {
             ex.printStackTrace();
         }
     }
+
     @Override
     public void delete(E e) {
         try {
             E[] temp = values;
-            int indexE= indexOf(e);
+            int indexE = indexOf(e);
             values = (E[]) new Object[temp.length - 1];
             System.arraycopy(temp, 0, values, 0, indexE);
             int amountElemsAfterIndex = temp.length - indexE - 1;
@@ -127,13 +131,35 @@ public class MyArrayList<E> implements MyArray<E> {
         values = (E[]) new Object[0];
     }
 
-    @Override
-    public void quickSort() {
 
-    }
 
     @Override
     public E set(int index, E e) {
         return values[index] = e;
+    }
+
+    @Override
+    public void sort() {
+        Arrays.sort(values);
+    }
+
+    @Override
+    public String toString() {
+        return "MyArrayList{" +
+                "values=" + Arrays.toString(values) +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object e) {
+        if (this == e) return true;
+        if (!(e instanceof MyArrayList)) return false;
+        MyArrayList<?> that = (MyArrayList<?>) e;
+        return Arrays.equals(values, that.values);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(values);
     }
 }
