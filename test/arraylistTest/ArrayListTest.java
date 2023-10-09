@@ -1,8 +1,9 @@
 package arraylistTest;
 
-import array_list.MyArray;
-import array_list.MyArrayList;
-import array_list.QuikSort;
+import array_list.*;
+import data_test.MarkComparator;
+import data_test.NameComparator;
+import data_test.Student;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -132,7 +133,7 @@ class ArrayListTest {
         assertEquals(6, myArray.size(), "Размер списка не соответствует количеству " +
                 "элементов после удаления");
         MyArray<String> testArray = new MyArrayList<>();
-        QuikSort.quickSort(myArray);
+        QuickSort.quickSort(myArray);
         testArray.add("A");
         testArray.add("Б");
         testArray.add("В");
@@ -146,8 +147,7 @@ class ArrayListTest {
         myArray.add("A");
         myArray.add("Б");
         myArray.add("В");
-        assertEquals(6, myArray.size(), "Размер списка не соответствует количеству " +
-                "элементов после удаления");
+        assertEquals(6, myArray.size(), "Размеры списков не равны");
         MyArray<String> testArray = new MyArrayList<>();
         myArray.sort();
         testArray.add("A");
@@ -157,5 +157,45 @@ class ArrayListTest {
         testArray.add("пока");
         testArray.add("привет");
         assertEquals(myArray, testArray, "Сортировка выполнена неверно");
+    }
+
+    @Test
+    void arrayTestSortObjectsByDoubleField() {
+        MyArray<Student> needToSortArray = new MyArrayList<>();
+        Student st1 = new Student(100, "Kira", "Petrova",6.5);
+        Student st2 = new Student(15, "Ivan", "Zimin",8.3);
+        Student st3 = new Student(123, "Petr", "Minin",7.4);
+        Student st4 = new Student(15, "Mariya", "Miller",8.8);
+        needToSortArray.add(st1);
+        needToSortArray.add(st2);
+        needToSortArray.add(st3);
+        needToSortArray.add(st4);
+        QuickSort.quickSort(needToSortArray, new MarkComparator());
+        MyArray<Student> testArray = new MyArrayList<>();
+        testArray.add(st1);
+        testArray.add(st3);
+        testArray.add(st2);
+        testArray.add(st4);
+        assertEquals(needToSortArray, testArray, "Сортировка выполнена неверно");
+    }
+
+    @Test
+    void arrayTestSortObjectsByStringField() {
+        MyArray<Student> needToSortArray = new MyArrayList<>();
+        Student st1 = new Student(100, "Kira", "Petrova",6.5);
+        Student st2 = new Student(15, "Ivan", "Zimin",8.3);
+        Student st3 = new Student(123, "Petr", "Minin",7.4);
+        Student st4 = new Student(15, "Mariya", "Miller",8.8);
+        needToSortArray.add(st1);
+        needToSortArray.add(st2);
+        needToSortArray.add(st3);
+        needToSortArray.add(st4);
+        QuickSort.quickSort(needToSortArray, new NameComparator());
+        MyArray<Student> testArray = new MyArrayList<>();
+        testArray.add(st2);
+        testArray.add(st1);
+        testArray.add(st4);
+        testArray.add(st3);
+        assertEquals(needToSortArray, testArray, "Сортировка выполнена неверно");
     }
 }
